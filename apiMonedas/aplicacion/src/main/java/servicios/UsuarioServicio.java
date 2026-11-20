@@ -15,6 +15,9 @@ import monedas.api.aplicacion.seguridad.*;
 @Service
 public class UsuarioServicio implements IUsuarioServicio {
 
+    private final IContadorIntentosLogin contador =
+            new ContadorSinConcurrencia();
+
     @Autowired
     private IUsuarioRepositorio repositorio;
 
@@ -23,6 +26,9 @@ public class UsuarioServicio implements IUsuarioServicio {
 
     @Override
     public UsuarioLoginDto login(String nombreUsuario, String clave) {
+
+        contador.registrarIntento();
+
         Usuario usuarioObtenido = repositorio.login(nombreUsuario, clave);
         UsuarioLoginDto userLoginResponseDto = new UsuarioLoginDto(usuarioObtenido);
         if (usuarioObtenido != null) {
