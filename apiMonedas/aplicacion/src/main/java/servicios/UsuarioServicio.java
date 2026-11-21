@@ -16,7 +16,7 @@ import monedas.api.aplicacion.seguridad.*;
 public class UsuarioServicio implements IUsuarioServicio {
 
     private final IContadorIntentosLogin contador =
-            new ContadorSinConcurrencia();
+            new ContadorAtomico();
 
     @Autowired
     private IUsuarioRepositorio repositorio;
